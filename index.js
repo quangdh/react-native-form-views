@@ -1,1 +1,2 @@
-export * from "./src/views/Wheel";
+export * from "./src/views";
+export * from "./src/forms";
