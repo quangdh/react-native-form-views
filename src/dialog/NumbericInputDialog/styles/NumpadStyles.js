@@ -20,7 +20,7 @@ export default (styles = StyleSheet.create({
         width: "100%",
         lineHeight: 55,
         fontSize: 20,
-        backgroundColor: "black",
+        backgroundColor: "#151b27",
         color: "white",
         textAlign: "center",
         fontWeight: "600"
