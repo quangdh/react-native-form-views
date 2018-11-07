@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View, Text, TouchableOpacity, ViewPropTypes } from 'react-native';
 import Modal from "react-native-modal";
 import numeral from "numeral";
+import { isEmpty } from "ramda";
 
 import styles from "./styles/NumbericInputDialogStyles";
 import Numpad from "./Numpad";
@@ -12,7 +13,8 @@ class NumbericInputDialog extends Component {
     super(props);
     this._onPress = this._onPress.bind(this);
     this.state = {
-      amount: 0
+      amount: 0,
+      decimal: ""
     }
     this._renderHeader = this._renderHeader.bind(this);
     this._renderFooter = this._renderFooter.bind(this);
@@ -20,24 +22,47 @@ class NumbericInputDialog extends Component {
 
   _onPress(tag) {
     switch (tag) {
-      case "back": break;
-      case "dot": break;
-      case "0": break;
-      default:
-        this._onPressNum(tag);
-        break;
+      case "back": this._onPressBack(); break;
+      case "dot": this._onPressDot(); break;
+      default: this._onPressNum(tag); break;
+    }
+  }
+
+  _onPressBack() {
+    const { amount, decimal } = this.state;
+    if (isEmpty(decimal)) {
+      let number = parseInt(amount / 10);
+      this.setState({
+        amount: number
+      });
+    } else {
+      let newDecimal = decimal.substring(0, decimal.length - 1);
+      this.setState({
+        decimal: newDecimal
+      })
+    }
+  }
+
+  _onPressDot() {
+    const { decimal } = this.state;
+    if (isEmpty(decimal)) {
+      this.setState({
+        decimal: "."
+      })
     }
   }
 
   _onPressNum(tag) {
-    const { amount } = this.state;
-    let numberStr = replace(",", "", amount);
-    if (startsWith("0", numberStr)) {
+    const { amount, decimal } = this.state;
+    if (isEmpty(decimal)) {
+      let number = numeral(tag).add(amount * 10).value();
       this.setState({
-        amount: tag
-      })
+        amount: number
+      });
     } else {
-
+      this.setState({
+        decimal: decimal + tag
+      })
     }
   }
 
@@ -57,6 +82,7 @@ class NumbericInputDialog extends Component {
 
   render() {
     const { amountBoxStyle, amountStyle, buttonDoneStyle, buttonDoneTextStyle, buttonDoneText } = this.props;
+    const { decimal } = this.state;
     let amount = numeral(this.state.amount).format("0,0");
     return (
       <Modal {...this.props} style={styles.container}>
@@ -64,7 +90,7 @@ class NumbericInputDialog extends Component {
           {this._renderHeader()}
           <View style={styles.board}>
             <View style={[styles.amountView, amountBoxStyle]}>
-              <Text style={[styles.amount, amountStyle]}>{amount}</Text>
+              <Text style={[styles.amount, amountStyle]}>{amount}{decimal}</Text>
             </View>
             <TouchableOpacity style={[styles.buttonOK, buttonDoneStyle]} activeOpacity={0.8}>
               <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>{buttonDoneText ? buttonDoneText : "OK"}</Text>
