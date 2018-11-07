@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { View, Text, TouchableOpacity, ViewPropTypes } from 'react-native';
 import Modal from "react-native-modal";
+import numeral from "numeral";
 
 import styles from "./styles/NumbericInputDialogStyles";
 import Numpad from "./Numpad";
@@ -22,12 +23,22 @@ class NumbericInputDialog extends Component {
       case "back": break;
       case "dot": break;
       case "0": break;
-      default: break;
+      default:
+        this._onPressNum(tag);
+        break;
     }
   }
 
   _onPressNum(tag) {
+    const { amount } = this.state;
+    let numberStr = replace(",", "", amount);
+    if (startsWith("0", numberStr)) {
+      this.setState({
+        amount: tag
+      })
+    } else {
 
+    }
   }
 
   _renderHeader() {
@@ -46,16 +57,17 @@ class NumbericInputDialog extends Component {
 
   render() {
     const { amountBoxStyle, amountStyle, buttonDoneStyle, buttonDoneTextStyle, buttonDoneText } = this.props;
+    let amount = numeral(this.state.amount).format("0,0");
     return (
       <Modal {...this.props} style={styles.container}>
         <View style={styles.content}>
           {this._renderHeader()}
           <View style={styles.board}>
             <View style={[styles.amountView, amountBoxStyle]}>
-              <Text style={[styles.amount, amountStyle]}>0</Text>
+              <Text style={[styles.amount, amountStyle]}>{amount}</Text>
             </View>
             <TouchableOpacity style={[styles.buttonOK, buttonDoneStyle]} activeOpacity={0.8}>
-              <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>{buttonDoneText? buttonDoneText : "OK"}</Text>
+              <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>{buttonDoneText ? buttonDoneText : "OK"}</Text>
             </TouchableOpacity>
           </View>
           <Numpad onPress={this._onPress} />
