@@ -18,6 +18,7 @@ class NumbericInputDialog extends Component {
     }
     this._renderHeader = this._renderHeader.bind(this);
     this._renderFooter = this._renderFooter.bind(this);
+    this._onDone = this._onDone.bind(this);
   }
 
   _onPress(tag) {
@@ -66,6 +67,17 @@ class NumbericInputDialog extends Component {
     }
   }
 
+  _onDone() {
+    const { onDone, onBackdropPress } = this.props;
+    const { amount, decimal } = this.state;
+    let number = numeral(amount);
+    if (!isEmpty(decimal) && decimal.length > 1) {
+      number = number.add("0" + decimal);
+    }
+    if (onDone) onDone(number.value());
+    if (onBackdropPress) onBackdropPress();
+  }
+
   _renderHeader() {
     const { HeaderComponent } = this.props;
     if (!HeaderComponent) return;
@@ -92,7 +104,7 @@ class NumbericInputDialog extends Component {
             <View style={[styles.amountView, amountBoxStyle]}>
               <Text style={[styles.amount, amountStyle]}>{amount}{decimal}</Text>
             </View>
-            <TouchableOpacity style={[styles.buttonOK, buttonDoneStyle]} activeOpacity={0.8}>
+            <TouchableOpacity style={[styles.buttonOK, buttonDoneStyle]} activeOpacity={0.8} onPress={this._onDone}>
               <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>{buttonDoneText ? buttonDoneText : "OK"}</Text>
             </TouchableOpacity>
           </View>
