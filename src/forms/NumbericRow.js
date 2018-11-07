@@ -3,6 +3,7 @@ import { Text, TouchableOpacity } from "react-native";
 import {
     NumbericInputDialog
 } from "../dialog";
+import numeral from "numeral";
 
 class NumbericRow extends Component {
     constructor(props) {
@@ -35,9 +36,13 @@ class NumbericRow extends Component {
     }
 
     render() {
+        const {}
+        let number = numeral(this.state.number).format("0,0");
         return (
-            <TouchableOpacity onPress={this._onShowDialog}>
-                <Text>{this.state.number}</Text>
+            <TouchableOpacity 
+                style={this.props.style}
+                onPress={this._onShowDialog}>
+                <Text style={this.props.textStyle}>{number}</Text>
                 <NumbericInputDialog
                     {...this.props}
                     isVisible={this.state.isShow}

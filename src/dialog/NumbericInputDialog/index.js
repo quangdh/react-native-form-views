@@ -97,7 +97,10 @@ class NumbericInputDialog extends Component {
     const { decimal } = this.state;
     let amount = numeral(this.state.amount).format("0,0");
     return (
-      <Modal {...this.props} style={styles.container}>
+      <Modal
+        isVisible={this.props.isVisible}
+        onBackdropPress={this.props.onBackdropPress}
+        style={styles.container}>
         <View style={styles.content}>
           {this._renderHeader()}
           <View style={styles.board}>
