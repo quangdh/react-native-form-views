@@ -36,7 +36,7 @@ class NumbericRow extends Component {
     }
 
     render() {
-        let number = numeral(this.state.number).format("0,0");
+        let number = numeral(this.state.number).format("0,0.[00000000]");
         return (
             <TouchableOpacity 
                 style={this.props.style}
