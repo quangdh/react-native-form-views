@@ -36,9 +36,12 @@ class WheelRow extends Component {
     render() {
         const { labelExtractor } = this.props;
         const { value } = this.state;
-        let label = labelExtractor ? labelExtractor(this.state.value, 0) : value["title"];
+        let label = "";
+        if (value)
+            label = labelExtractor ? labelExtractor(value, 0) : value["title"];
         return (
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={this._onShowDialog}>
                 <Text style={this.props.textStyle}>{label}</Text>
                 <SelectionInputDialog
                     {...this.props}
