@@ -7,5 +7,8 @@ module.exports = {
     "prettier/flowtype", // if you are using flow
     "prettier/react"
   ],
-  plugins: ["jsx-a11y"]
+  plugins: ["jsx-a11y", "prettier"],
+  rules: {
+    "prettier/prettier": "error"
+  }
 };
