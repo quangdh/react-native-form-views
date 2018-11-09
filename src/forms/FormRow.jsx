@@ -7,15 +7,7 @@ import styles from "./styles/FormRowStyles";
 
 class FormRow extends PureComponent {
   render() {
-    const {
-      style,
-      labelStyle,
-      label,
-      labelBox,
-      isLaberUpper,
-      children 
-    } = this.props;
-
+    const { style, labelStyle, label, labelBox, isLaberUpper, children } = this.props;
     return (
       <View style={style ? [styles.container, style] : styles.container}>
         <View style={labelBox ? [styles.labelBox, labelBox] : styles.labelBox}>
