@@ -6,37 +6,38 @@ export default (styles = StyleSheet.create({
     margin: 0
   },
   content: {
+    flexDirection: "row",
     width: "100%",
     alignItems: "center",
     backgroundColor: "white",
     margin: 0
   },
-  board: {
+  flatlist: {
     width: "100%",
-    flexDirection: "row",
+    height: 180,
+    backgroundColor: "white"
+  },
+  header: {
+    backgroundColor: "green",
     padding: 10
   },
-  amountView: {
-    flex: 1,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderWidth: 0.5,
-    borderRadius: 5
+  buttonClose: {
+    alignSelf: "flex-end",
+    color: "white",
+    fontSize: 18
   },
-  amount: {
-    lineHeight: 25,
-    fontSize: 20,
-    fontWeight: "400"
+  footer: {
+    backgroundColor: "#fafafa",
+    alignItems: "center",
+    padding: 10
   },
   buttonOK: {
-    padding: 8,
-    paddingLeft: 15,
-    paddingRight: 15,
-    marginLeft: 10,
+    maxWidth: 300,
+    width: "80%",
+    padding: 10,
     backgroundColor: "green",
-    borderRadius: 3
+    borderRadius: 5,
+    alignItems: "center"
   },
   textButtonOK: {
     color: "white",

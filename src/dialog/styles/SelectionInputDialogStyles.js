@@ -6,16 +6,16 @@ export default (styles = StyleSheet.create({
     margin: 0
   },
   content: {
-    flexDirection:"row",
+    flexDirection: "row",
     width: "100%",
     alignItems: "center",
     backgroundColor: "white",
-    margin: 0,
+    margin: 0
   },
   wheel: {
-    width: "100%", 
-    height: 180 ,
-    backgroundColor: "white",
+    width: "100%",
+    height: 180,
+    backgroundColor: "white"
   },
   header: {
     backgroundColor: "green",
@@ -37,7 +37,7 @@ export default (styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "green",
     borderRadius: 5,
-    alignItems: "center",
+    alignItems: "center"
   },
   textButtonOK: {
     color: "white",

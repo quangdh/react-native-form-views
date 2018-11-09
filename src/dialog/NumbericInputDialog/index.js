@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Text, TouchableOpacity, ViewPropTypes } from 'react-native';
+import { View, Text, TouchableOpacity, ViewPropTypes } from "react-native";
 import Modal from "react-native-modal";
 import numeral from "numeral";
 import { isEmpty } from "ramda";
@@ -15,7 +15,7 @@ class NumbericInputDialog extends Component {
     this.state = {
       amount: 0,
       decimal: ""
-    }
+    };
     this._renderHeader = this._renderHeader.bind(this);
     this._renderFooter = this._renderFooter.bind(this);
     this._onDone = this._onDone.bind(this);
@@ -23,9 +23,15 @@ class NumbericInputDialog extends Component {
 
   _onPress(tag) {
     switch (tag) {
-      case "back": this._onPressBack(); break;
-      case "dot": this._onPressDot(); break;
-      default: this._onPressNum(tag); break;
+      case "back":
+        this._onPressBack();
+        break;
+      case "dot":
+        this._onPressDot();
+        break;
+      default:
+        this._onPressNum(tag);
+        break;
     }
   }
 
@@ -40,7 +46,7 @@ class NumbericInputDialog extends Component {
       let newDecimal = decimal.substring(0, decimal.length - 1);
       this.setState({
         decimal: newDecimal
-      })
+      });
     }
   }
 
@@ -49,21 +55,23 @@ class NumbericInputDialog extends Component {
     if (isEmpty(decimal)) {
       this.setState({
         decimal: "."
-      })
+      });
     }
   }
 
   _onPressNum(tag) {
     const { amount, decimal } = this.state;
     if (isEmpty(decimal)) {
-      let number = numeral(tag).add(amount * 10).value();
+      let number = numeral(tag)
+        .add(amount * 10)
+        .value();
       this.setState({
         amount: number
       });
     } else {
       this.setState({
         decimal: decimal + tag
-      })
+      });
     }
   }
 
@@ -82,33 +90,49 @@ class NumbericInputDialog extends Component {
     const { HeaderComponent } = this.props;
     if (!HeaderComponent) return;
     // if (typeof HeaderComponent === "function") return HeaderComponent();
-    return <HeaderComponent />
+    return <HeaderComponent />;
   }
 
   _renderFooter() {
     const { FooterComponent } = this.props;
     if (!FooterComponent) return;
     // if (typeof HeaderComponent === "function") return HeaderComponent();
-    return <FooterComponent />
+    return <FooterComponent />;
   }
 
   render() {
-    const { amountBoxStyle, amountStyle, buttonDoneStyle, buttonDoneTextStyle, buttonDoneText } = this.props;
+    const {
+      amountBoxStyle,
+      amountStyle,
+      buttonDoneStyle,
+      buttonDoneTextStyle,
+      buttonDoneText
+    } = this.props;
     const { decimal } = this.state;
     let amount = numeral(this.state.amount).format("0,0");
     return (
       <Modal
         isVisible={this.props.isVisible}
         onBackdropPress={this.props.onBackdropPress}
-        style={styles.container}>
+        style={styles.container}
+      >
         <View style={styles.content}>
           {this._renderHeader()}
           <View style={styles.board}>
             <View style={[styles.amountView, amountBoxStyle]}>
-              <Text style={[styles.amount, amountStyle]}>{amount}{decimal}</Text>
+              <Text style={[styles.amount, amountStyle]}>
+                {amount}
+                {decimal}
+              </Text>
             </View>
-            <TouchableOpacity style={[styles.buttonOK, buttonDoneStyle]} activeOpacity={0.8} onPress={this._onDone}>
-              <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>{buttonDoneText ? buttonDoneText : "OK"}</Text>
+            <TouchableOpacity
+              style={[styles.buttonOK, buttonDoneStyle]}
+              activeOpacity={0.8}
+              onPress={this._onDone}
+            >
+              <Text style={[styles.textButtonOK, buttonDoneTextStyle]}>
+                {buttonDoneText ? buttonDoneText : "OK"}
+              </Text>
             </TouchableOpacity>
           </View>
           <Numpad onPress={this._onPress} />
@@ -134,6 +158,6 @@ NumbericInputDialog.propTypes = {
     PropTypes.shape({ render: PropTypes.func.isRequired }),
     PropTypes.func
   ])
-}
+};
 
 export default NumbericInputDialog;

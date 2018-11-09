@@ -1,5 +1,3 @@
 import Wheel from "./Wheel";
 
-export {
-    Wheel
-}
+export { Wheel };

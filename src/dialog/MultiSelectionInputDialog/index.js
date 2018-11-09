@@ -1,52 +1,32 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, ViewPropTypes } from "react-native";
-import Modal from "react-native-modal";
 import PropTypes from "prop-types";
-import { length, findIndex } from "ramda";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  ViewPropTypes
+} from "react-native";
+import Modal from "react-native-modal";
 
-import { Wheel } from "../input";
-import styles from "./styles/SelectionInputDialogStyles";
+import styles from "./styles/MultiSelectionInputDialog";
+import Cell from "./Cell";
 
-class SelectionInputDialog extends Component {
+class MultiSelectionInputDialog extends Component {
   constructor(props) {
     super(props);
     this._renderItem = this._renderItem.bind(this);
-    this._onValueChange = this._onValueChange.bind(this);
-    this._onPressOK = this._onPressOK.bind(this);
 
-    let _value = null;
-    if (props.value && props.data && length(props.data) > 0) {
-      if (props.keyExtractor) {
-        let index = findIndex(
-          item =>
-            JSON.stringify({ value: item }) ===
-            JSON.stringify({ value: props.value }),
-          props.data
-        );
-        _value = props.keyExtractor(props.value, index);
-      } else _value = props.value["id"];
-    }
     this.state = {
-      data: props.data ? props.data : [],
-      value: _value
+      values: []
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (JSON.stringify(state.data) !== JSON.stringify(props.data)) {
-      return {
-        data: props.data ? props.data : [],
-        value: null
-      };
-    }
-    return null;
-  }
-
-  _renderItem(value, i) {
+  _renderItem({ item, index }) {
     const { keyExtractor, labelExtractor } = this.props;
-    let key = keyExtractor ? keyExtractor(value, i) : value["id"] + "";
-    let label = labelExtractor ? labelExtractor(value, i) : value["title"];
-    return <Wheel.Item label={label} value={key} key={key} />;
+    let key = keyExtractor ? keyExtractor(item, index) : item["id"] + "";
+    let label = labelExtractor ? labelExtractor(item, index) : item["title"];
+    return <Cell key={key} text={label} />;
   }
 
   _renderHeader() {
@@ -96,30 +76,6 @@ class SelectionInputDialog extends Component {
     }
   }
 
-  _onValueChange(value) {
-    this.setState({
-      value
-    });
-  }
-
-  _onPressOK() {
-    const { keyExtractor, onPressOK, onBackdropPress } = this.props;
-    const { value, data } = this.state;
-    if (onPressOK) {
-      let result = null;
-      if (length(data) > 0) {
-        result = data[0];
-        let index = findIndex((item, index) => {
-          let key = keyExtractor ? keyExtractor(item, index) : item["id"];
-          return value === key;
-        }, data);
-        result = index > 0 ? data[index] : null;
-      }
-      onPressOK(result);
-    }
-    if (onBackdropPress) onBackdropPress();
-  }
-
   render() {
     return (
       <Modal
@@ -129,14 +85,14 @@ class SelectionInputDialog extends Component {
       >
         <View>
           {this._renderHeader()}
-          <Wheel
-            style={styles.wheel}
-            selectedValue={this.state.value}
-            onValueChange={this._onValueChange}
-          >
-            {length(this.state.data) > 0 &&
-              this.state.data.map(this._renderItem)}
-          </Wheel>
+          <FlatList
+            data={this.props.data}
+            style={styles.flatlist}
+            extraData={this.state.values}
+            numColumns={this.props.numColumns}
+            keyExtractor={this.props.keyExtractor}
+            renderItem={this._renderItem}
+          />
           {this._renderFooter()}
         </View>
       </Modal>
@@ -144,11 +100,18 @@ class SelectionInputDialog extends Component {
   }
 }
 
-SelectionInputDialog.propTypes = {
+MultiSelectionInputDialog.defaultProps = {
+  data: [],
+  numColumns: 3,
+  values: []
+};
+
+MultiSelectionInputDialog.propTypes = {
   data: PropTypes.array,
   keyExtractor: PropTypes.func,
   labelExtractor: PropTypes.func,
-  value: PropTypes.any,
+  numColumns: PropTypes.number,
+  values: PropTypes.array,
   HeaderComponent: PropTypes.oneOfType([
     PropTypes.shape({ render: PropTypes.func.isRequired }),
     PropTypes.func
@@ -168,4 +131,4 @@ SelectionInputDialog.propTypes = {
   buttonCloseText: PropTypes.string
 };
 
-export default SelectionInputDialog;
+export default MultiSelectionInputDialog;

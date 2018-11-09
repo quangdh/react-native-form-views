@@ -6,7 +6,6 @@ import { toUpper } from "ramda";
 import styles from "./styles/FormRowStyles";
 
 class FormRow extends PureComponent {
-
   render() {
     const { style, labelStyle, label, labelBox, isLaberUpper } = this.props;
     return (

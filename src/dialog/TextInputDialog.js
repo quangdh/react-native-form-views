@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from "react";
+import { View, Text } from "react-native";
 import Modal from "react-native-modal";
 
 class TextInputDialog extends Component {
@@ -8,11 +8,7 @@ class TextInputDialog extends Component {
   }
 
   render() {
-    return (
-      <Modal {...this.props} style={styles.container}>
-        
-      </Modal>
-    );
+    return <Modal {...this.props} style={styles.container} />;
   }
 }
 
