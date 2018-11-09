@@ -7,7 +7,15 @@ import styles from "./styles/FormRowStyles";
 
 class FormRow extends PureComponent {
   render() {
-    const { style, labelStyle, label, labelBox, isLaberUpper } = this.props;
+    const {
+      style,
+      labelStyle,
+      label,
+      labelBox,
+      isLaberUpper,
+      children 
+    } = this.props;
+
     return (
       <View style={style ? [styles.container, style] : styles.container}>
         <View style={labelBox ? [styles.labelBox, labelBox] : styles.labelBox}>
@@ -15,7 +23,7 @@ class FormRow extends PureComponent {
             {isLaberUpper ? toUpper(label) : label}
           </Text>
         </View>
-        <View style={styles.content}>{this.props.children}</View>
+        <View style={styles.content}>{children}</View>
       </View>
     );
   }
@@ -33,7 +41,8 @@ FormRow.propTypes = {
 };
 
 FormRow.defaultProps = {
-  isLaberUpper: true
+  isLaberUpper: true,
+  label: ""
 };
 
 export default FormRow;

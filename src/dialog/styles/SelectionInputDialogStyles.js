@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export default (styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     justifyContent: "flex-end",
     margin: 0
@@ -44,4 +44,4 @@ export default (styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600"
   }
-}));
+});
