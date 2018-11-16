@@ -8,7 +8,7 @@ class WheelRow extends Component {
     super(props);
     this.state = {
       isShow: false,
-      value: null
+      value: props.value
     };
     this._onHideDialog = this._onHideDialog.bind(this);
     this._onPressOK = this._onPressOK.bind(this);
@@ -43,7 +43,7 @@ class WheelRow extends Component {
         : value["title"];
     }
     return (
-      <TouchableOpacity style={style} onPress={this.onShowDialog}>
+      <TouchableOpacity style={style} onPress={this._onShowDialog}>
         <Text style={this.props.textStyle}>{label}</Text>
         <SelectionInputDialog
           {...this.props}
