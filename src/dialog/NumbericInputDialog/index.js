@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { View, Text, TouchableOpacity, ViewPropTypes } from "react-native";
 import Modal from "react-native-modal";
 import numeral from "numeral";
-import { isEmpty, split } from "ramda";
+import { isEmpty, split, toString, length } from "ramda";
 
 import styles from "./styles/NumbericInputDialogStyles";
 import Numpad from "./Numpad";
@@ -16,7 +16,7 @@ class NumbericInputDialog extends Component {
     this._renderFooter = this._renderFooter.bind(this);
     this._onDone = this._onDone.bind(this);
 
-    let number = numeral(props.amount).format("0.[0]");
+    let number = numeral(props.amount).format("0.[00000000]");
     let parts = split(".", number);
     this.state = {
       amount: parts ? numeral(parts[0]).value() : props.amount,
@@ -26,7 +26,7 @@ class NumbericInputDialog extends Component {
 
   componentDidUpdate(preProps) {
     if (!preProps.isVisible && this.props.isVisible) {
-      let number = numeral(this.props.amount).format("0.[0]");
+      let number = numeral(this.props.amount).format("0.[00000000]");
       let parts = split(".", number);
       this.setState({
         amount: parts ? numeral(parts[0]).value() : this.props.amount,
@@ -65,6 +65,9 @@ class NumbericInputDialog extends Component {
   }
 
   _onPressDot() {
+    let length = this._getLength();
+    if (this.props.maxLength > 0 && length >= this.props.maxLength) return;
+
     const { decimal } = this.state;
     if (isEmpty(decimal)) {
       this.setState({
@@ -74,6 +77,9 @@ class NumbericInputDialog extends Component {
   }
 
   _onPressNum(tag) {
+    let length = this._getLength();
+    if (this.props.maxLength > 0 && length >= this.props.maxLength) return;
+
     const { amount, decimal } = this.state;
     if (isEmpty(decimal)) {
       let number = numeral(tag)
@@ -87,6 +93,13 @@ class NumbericInputDialog extends Component {
         decimal: decimal + tag
       });
     }
+  }
+
+  _getLength() {
+    const { amount, decimal } = this.state;
+    let _length = length(toString(amount));
+    if (!isEmpty(decimal)) _length += length(decimal) - 1;
+    return _length;
   }
 
   _onDone() {
@@ -171,7 +184,12 @@ NumbericInputDialog.propTypes = {
   FooterComponent: PropTypes.oneOfType([
     PropTypes.shape({ render: PropTypes.func.isRequired }),
     PropTypes.func
-  ])
+  ]),
+  maxLength: PropTypes.number
+};
+
+NumbericInputDialog.defaultProps = {
+  maxLength: 0
 };
 
 export default NumbericInputDialog;

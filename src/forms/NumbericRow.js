@@ -32,9 +32,14 @@ class NumbericRow extends Component {
   }
 
   onDone(number) {
-    this.setState({
-      number
-    });
+    this.setState(
+      {
+        number
+      },
+      () => {
+        this.props.onValueChange(number);
+      }
+    );
   }
 
   onShowDialog() {
@@ -64,11 +69,13 @@ class NumbericRow extends Component {
 }
 
 NumbericRow.propTypes = {
-  amount: PropTypes.number
+  amount: PropTypes.number,
+  onValueChange: PropTypes.func
 };
 
 NumbericRow.defaultProps = {
-  amount: 0
+  amount: 0,
+  onValueChange: () => {}
 };
 
 export default NumbericRow;
