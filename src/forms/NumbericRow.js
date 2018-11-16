@@ -62,6 +62,7 @@ class NumbericRow extends Component {
           isVisible={isShow}
           onBackdropPress={this.onHideDialog}
           onDone={this.onDone}
+          maxLength={this.props.maxLength}
         />
       </TouchableOpacity>
     );
@@ -70,12 +71,14 @@ class NumbericRow extends Component {
 
 NumbericRow.propTypes = {
   amount: PropTypes.number,
-  onValueChange: PropTypes.func
+  onValueChange: PropTypes.func,
+  maxLength: PropTypes.number
 };
 
 NumbericRow.defaultProps = {
   amount: 0,
-  onValueChange: () => {}
+  onValueChange: () => {},
+  maxLength: 0
 };
 
 export default NumbericRow;
