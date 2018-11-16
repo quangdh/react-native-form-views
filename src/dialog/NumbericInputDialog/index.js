@@ -17,7 +17,7 @@ class NumbericInputDialog extends Component {
     this._onDone = this._onDone.bind(this);
 
     let number = numeral(props.amount).format("0.[0]");
-    let parts = split(number, ".");
+    let parts = split(".", number);
     this.state = {
       amount: parts ? numeral(parts[0]).value() : props.amount,
       decimal: parts && parts[1] ? "." + parts[1] : ""
@@ -27,7 +27,7 @@ class NumbericInputDialog extends Component {
   componentDidUpdate(preProps) {
     if (!preProps.isVisible && this.props.isVisible) {
       let number = numeral(this.props.amount).format("0.[0]");
-      let parts = split(number, ".");
+      let parts = split(".", number);
       this.setState({
         amount: parts ? numeral(parts[0]).value() : this.props.amount,
         decimal: parts && parts[1] ? "." + parts[1] : ""
