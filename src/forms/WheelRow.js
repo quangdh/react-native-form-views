@@ -34,7 +34,7 @@ class WheelRow extends Component {
   }
 
   render() {
-    const { labelExtractor } = this.props;
+    const { labelExtractor, style } = this.props;
     const { value } = this.state;
     let label = "";
     if (value) {
@@ -43,7 +43,7 @@ class WheelRow extends Component {
         : value["title"];
     }
     return (
-      <TouchableOpacity>
+      <TouchableOpacity style={style} onPress={this.onShowDialog}>
         <Text style={this.props.textStyle}>{label}</Text>
         <SelectionInputDialog
           {...this.props}
