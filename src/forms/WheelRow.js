@@ -7,7 +7,7 @@ class WheelRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShow: true,
+      isShow: false,
       value: null
     };
     this._onHideDialog = this._onHideDialog.bind(this);
