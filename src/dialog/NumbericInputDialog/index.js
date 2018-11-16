@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { View, Text, TouchableOpacity, ViewPropTypes } from "react-native";
 import Modal from "react-native-modal";
 import numeral from "numeral";
-import { isEmpty } from "ramda";
+import { isEmpty, split } from "ramda";
 
 import styles from "./styles/NumbericInputDialogStyles";
 import Numpad from "./Numpad";
@@ -12,13 +12,27 @@ class NumbericInputDialog extends Component {
   constructor(props) {
     super(props);
     this._onPress = this._onPress.bind(this);
-    this.state = {
-      amount: 0,
-      decimal: ""
-    };
     this._renderHeader = this._renderHeader.bind(this);
     this._renderFooter = this._renderFooter.bind(this);
     this._onDone = this._onDone.bind(this);
+
+    let number = numeral(props.amount).format("0.[0]");
+    let parts = split(number, ".");
+    this.state = {
+      amount: parts ? numeral(parts[0]).value() : props.amount,
+      decimal: parts && parts[1] ? "." + parts[1] : ""
+    };
+  }
+
+  componentDidUpdate(preProps) {
+    if (!preProps.isVisible && this.props.isVisible) {
+      let number = numeral(this.props.amount).format("0.[0]");
+      let parts = split(number, ".");
+      this.setState({
+        amount: parts ? numeral(parts[0]).value() : this.props.amount,
+        decimal: parts && parts[1] ? "." + parts[1] : ""
+      });
+    }
   }
 
   _onPress(tag) {

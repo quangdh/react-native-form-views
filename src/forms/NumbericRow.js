@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Text, TouchableOpacity } from "react-native";
 import numeral from "numeral";
 import { NumbericInputDialog } from "../dialog";
@@ -8,11 +9,20 @@ class NumbericRow extends Component {
     super(props);
     this.state = {
       isShow: false,
-      number: 0
+      number: props.amount
     };
     this.onHideDialog = this.onHideDialog.bind(this);
     this.onDone = this.onDone.bind(this);
     this.onShowDialog = this.onShowDialog.bind(this);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.amount !== prevState.number) {
+      return {
+        number: nextProps.amount
+      };
+    }
+    return null;
   }
 
   onHideDialog() {
@@ -43,6 +53,7 @@ class NumbericRow extends Component {
         <Text style={textStyle}>{amount}</Text>
         <NumbericInputDialog
           {...this.props}
+          amount={this.state.number}
           isVisible={isShow}
           onBackdropPress={this.onHideDialog}
           onDone={this.onDone}
@@ -51,5 +62,13 @@ class NumbericRow extends Component {
     );
   }
 }
+
+NumbericRow.propTypes = {
+  amount: PropTypes.number
+};
+
+NumbericRow.defaultProps = {
+  amount: 0
+};
 
 export default NumbericRow;
