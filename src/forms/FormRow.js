@@ -13,7 +13,8 @@ class FormRow extends PureComponent {
       label,
       labelBox,
       isLaberUpper,
-      children
+      children,
+      contentStyle
     } = this.props;
     return (
       <View style={style ? [styles.container, style] : styles.container}>
@@ -22,7 +23,7 @@ class FormRow extends PureComponent {
             {isLaberUpper ? toUpper(label) : label}
           </Text>
         </View>
-        <View style={styles.content}>{children}</View>
+        <View style={[styles.content, contentStyle]}>{children}</View>
       </View>
     );
   }
