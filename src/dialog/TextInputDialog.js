@@ -26,13 +26,16 @@ class TextInputDialog extends Component {
     this._onDone = this._onDone.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.value != prevState.inputValue) {
-      return {
-        inputValue: nextProps.value
-      };
+  componentDidUpdate(preProps) {
+    if (
+      !preProps.isVisible &&
+      this.props.isVisible &&
+      this.state.inputValue !== this.props.value
+    ) {
+      this.setState({
+        inputValue: this.props.value
+      });
     }
-    return null;
   }
 
   componentDidMount() {
