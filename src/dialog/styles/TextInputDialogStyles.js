@@ -17,15 +17,19 @@ export default (styles = StyleSheet.create({
     padding: 10
   },
   textView: {
+    width: "100%",
+    flexDirection: "row",
     flex: 1,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
     borderWidth: 0.5,
-    borderRadius: 5
+    borderRadius: 5,
+    alignItems: "center"
   },
   text: {
+    flex: 1,
     lineHeight: 25,
     fontSize: 20,
     fontWeight: "400"
@@ -42,5 +46,11 @@ export default (styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     fontWeight: "600"
+  },
+  iconClear: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
+    marginLeft: 5
   }
 }));
