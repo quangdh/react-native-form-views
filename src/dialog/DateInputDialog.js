@@ -9,13 +9,24 @@ import styles from "./styles/DateInputDialogStyles";
 class DateInputDialog extends Component {
   constructor(props) {
     super(props);
-    this._renderItem = this._renderItem.bind(this);
     this._onValueChange = this._onValueChange.bind(this);
     this._onPressOK = this._onPressOK.bind(this);
 
     this.state = {
-      value: new Date()
+      value: props.value ? props.value : new Date()
     };
+  }
+
+  componentDidUpdate(preProps) {
+    if (
+      !preProps.isVisible &&
+      this.props.isVisible &&
+      this.state.value !== this.props.value
+    ) {
+      this.setState({
+        value: this.props.value
+      });
+    }
   }
 
   _renderHeader() {
@@ -65,9 +76,9 @@ class DateInputDialog extends Component {
     }
   }
 
-  _onValueChange(value) {
+  _onValueChange(newValue) {
     this.setState({
-      value
+      value: newValue
     });
   }
 
