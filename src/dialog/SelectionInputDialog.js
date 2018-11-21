@@ -4,7 +4,7 @@ import Modal from "react-native-modal";
 import PropTypes from "prop-types";
 import { length, findIndex } from "ramda";
 
-import { Wheel } from "../input";
+import { Wheel } from "../views";
 import styles from "./styles/SelectionInputDialogStyles";
 
 class SelectionInputDialog extends Component {
