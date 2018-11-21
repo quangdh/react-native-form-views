@@ -14,7 +14,7 @@ export default (styles = StyleSheet.create({
   },
   flatlist: {
     width: "100%",
-    height: 180,
+    height: 140,
     backgroundColor: "white"
   },
   header: {

@@ -8,6 +8,7 @@ import {
   ViewPropTypes
 } from "react-native";
 import Modal from "react-native-modal";
+import { findIndex } from "ramda";
 
 import styles from "./styles/MultiSelectionInputDialog";
 import Cell from "./Cell";
@@ -16,17 +17,70 @@ class MultiSelectionInputDialog extends Component {
   constructor(props) {
     super(props);
     this._renderItem = this._renderItem.bind(this);
-
+    this._onItemPress = this._onItemPress.bind(this);
+    this._onPressOK = this._onPressOK.bind(this);
     this.state = {
-      values: []
+      values: props.values ? props.values : []
     };
+  }
+
+  componentDidUpdate(preProps) {
+    if (
+      !preProps.isVisible &&
+      this.props.isVisible &&
+      JSON.stringify(this.state.values) !== JSON.stringify(this.props.values)
+    ) {
+      this.setState({
+        values: this.props.values
+      });
+    }
+  }
+
+  _onItemPress(item) {
+    const { keyExtractor } = this.props;
+    let values = [...this.state.values];
+
+    let key = keyExtractor ? keyExtractor(item) : item["id"] + "";
+    let itemIndex = findIndex(_item => {
+      let key1 = keyExtractor ? keyExtractor(_item) : item["id"] + "";
+      return key1 === key;
+    }, values);
+
+    if (itemIndex >= 0) {
+      values.splice(itemIndex, 1);
+    } else {
+      values.push(item);
+    }
+
+    this.setState({
+      values
+    });
   }
 
   _renderItem({ item, index }) {
     const { keyExtractor, labelExtractor } = this.props;
+    const { values } = this.state;
     let key = keyExtractor ? keyExtractor(item, index) : item["id"] + "";
     let label = labelExtractor ? labelExtractor(item, index) : item["title"];
-    return <Cell key={key} text={label} />;
+    let selected =
+      findIndex(_item => {
+        let key1 = keyExtractor ? keyExtractor(_item) : item["id"] + "";
+        return key1 === key;
+      }, values) >= 0;
+    return (
+      <Cell
+        index={index}
+        selected={selected}
+        data={item}
+        onPress={this._onItemPress}
+        key={key}
+        text={label}
+        style={this.props.cellStyle}
+        textStyle={this.props.textCellStyle}
+        selectedStyle={this.props.cellSelectedStyle}
+        textSelectedStyle={this.props.textCellSelectedStyle}
+      />
+    );
   }
 
   _renderHeader() {
@@ -76,6 +130,12 @@ class MultiSelectionInputDialog extends Component {
     }
   }
 
+  _onPressOK() {
+    const { onBackdropPress, onPressOK } = this.props;
+    onPressOK(this.state.values);
+    onBackdropPress();
+  }
+
   render() {
     return (
       <Modal
@@ -103,7 +163,9 @@ class MultiSelectionInputDialog extends Component {
 MultiSelectionInputDialog.defaultProps = {
   data: [],
   numColumns: 3,
-  values: []
+  values: [],
+  onBackdropPress: () => {},
+  onPressOK: () => {}
 };
 
 MultiSelectionInputDialog.propTypes = {
@@ -128,6 +190,10 @@ MultiSelectionInputDialog.propTypes = {
   headerStyle: ViewPropTypes.style,
   buttonCloseStyle: ViewPropTypes.style,
   buttonCloseTextStyle: ViewPropTypes.style,
+  cellStyle: ViewPropTypes.style,
+  // cellSelectedStyle: ViewPropTypes.style,
+  textCellStyle: ViewPropTypes.style,
+  // textCellSelectedStyle: ViewPropTypes.style,
   buttonCloseText: PropTypes.string
 };
 
