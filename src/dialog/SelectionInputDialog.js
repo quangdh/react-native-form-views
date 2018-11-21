@@ -113,7 +113,7 @@ class SelectionInputDialog extends Component {
           let key = keyExtractor ? keyExtractor(item, index) : item["id"];
           return value === key;
         }, data);
-        result = index > 0 ? data[index] : null;
+        result = index >= 0 ? data[index] : null;
       }
       onPressOK(result);
     }
