@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
+import { Text, TouchableOpacity, ViewPropTypes } from "react-native";
 
 import { SelectionInputDialog } from "../dialog";
 
@@ -25,6 +26,7 @@ class WheelRow extends Component {
     this.setState({
       value: item
     });
+    this.props.onValueChange(item);
   }
 
   _onShowDialog() {
@@ -56,5 +58,15 @@ class WheelRow extends Component {
     );
   }
 }
+
+WheelRow.propTypes = {
+  ...SelectionInputDialog.propTypes,
+  onValueChange: PropTypes.func,
+  value: PropTypes.any
+};
+
+WheelRow.defaultProps = {
+  onValueChange: () => {}
+};
 
 export default WheelRow;
