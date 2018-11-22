@@ -16,6 +16,15 @@ class WheelRow extends Component {
     this._onShowDialog = this._onShowDialog.bind(this);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (JSON.stringify(nextProps.value) !== JSON.stringify(prevState.value)) {
+      return {
+        value: nextProps.value
+      };
+    }
+    return null;
+  }
+
   _onHideDialog() {
     this.setState({
       isShow: false
