@@ -37,10 +37,23 @@ class SelectionInputDialog extends Component {
       let isChangeValue =
         JSON.stringify({ value: this.state.value }) !==
         JSON.stringify({ value: this.props.value });
-      if (isChangeValue)
+      if (isChangeValue) {
+        const { value, keyExtractor, data } = this.props;
+        let _value = null;
+        if (value && data && length(data) > 0) {
+          if (keyExtractor) {
+            let index = findIndex(
+              item =>
+                JSON.stringify({ value: item }) === JSON.stringify({ value }),
+              data
+            );
+            _value = keyExtractor(value, index);
+          } else _value = value["id"];
+        }
         this.setState({
-          value: this.props.value
+          value: _value
         });
+      }
     }
   }
 
