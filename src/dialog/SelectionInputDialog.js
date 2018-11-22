@@ -35,7 +35,7 @@ class SelectionInputDialog extends Component {
   componentDidUpdate(preProps) {
     if (!preProps.isVisible && this.props.isVisible) {
       let isChangeValue =
-        JSON.stringify({ value: preProps.value }) !==
+        JSON.stringify({ value: this.state.value }) !==
         JSON.stringify({ value: this.props.value });
       if (isChangeValue)
         this.setState({
