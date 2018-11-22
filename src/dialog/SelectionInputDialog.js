@@ -32,14 +32,19 @@ class SelectionInputDialog extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (JSON.stringify(state.data) !== JSON.stringify(props.data)) {
-      return {
-        data: props.data ? props.data : [],
-        value: null
-      };
+  componentDidUpdate(preProps) {
+    if (
+      !preProps.isVisible &&
+      this.props.isVisible &&
+      JSON.stringify(
+        { value: preProps.value } !==
+          JSON.stringify({ value: this.props.value })
+      )
+    ) {
+      this.setState({
+        value: this.props.value
+      });
     }
-    return null;
   }
 
   _renderItem(value, i) {
