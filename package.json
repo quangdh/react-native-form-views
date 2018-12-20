@@ -1,6 +1,6 @@
 {
-  "name": "react-native-react-native-form-views",
-  "version": "1.2.2",
+  "name": "react-native-form-views",
+  "version": "1.2.3",
   "description": "",
   "main": "index.js",
   "scripts": {
