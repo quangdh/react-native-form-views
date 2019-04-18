@@ -32,31 +32,29 @@ class SelectionInputContainer extends Component {
   }
 
   componentDidUpdate(preProps) {
-    if (!preProps.isVisible && this.props.isVisible) {
-      let isChangeValue =
-        JSON.stringify({ value: this.state.value }) !==
-        JSON.stringify({ value: this.props.value });
-      let isChangeData =
-        JSON.stringify({ value: this.state.data }) !==
-        JSON.stringify({ value: this.props.data });
-      if (isChangeValue || isChangeData) {
-        const { value, keyExtractor, data } = this.props;
-        let _value = null;
-        if (value && data && length(data) > 0) {
-          if (keyExtractor) {
-            let index = findIndex(
-              item =>
-                JSON.stringify({ value: item }) === JSON.stringify({ value }),
-              data
-            );
-            _value = keyExtractor(value, index);
-          } else _value = value["id"];
-        }
-        this.setState({
-          value: _value,
-          data: this.props.data
-        });
+    let isChangeValue =
+      JSON.stringify({ value: this.state.value }) !==
+      JSON.stringify({ value: this.props.value });
+    let isChangeData =
+      JSON.stringify({ value: this.state.data }) !==
+      JSON.stringify({ value: this.props.data });
+    if (isChangeValue || isChangeData) {
+      const { value, keyExtractor, data } = this.props;
+      let _value = null;
+      if (value && data && length(data) > 0) {
+        if (keyExtractor) {
+          let index = findIndex(
+            item =>
+              JSON.stringify({ value: item }) === JSON.stringify({ value }),
+            data
+          );
+          _value = keyExtractor(value, index);
+        } else _value = value["id"];
       }
+      this.setState({
+        value: _value,
+        data: this.props.data
+      });
     }
   }
 
