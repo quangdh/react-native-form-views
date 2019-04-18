@@ -31,32 +31,32 @@ class SelectionInputContainer extends Component {
     };
   }
 
-  componentDidUpdate(preProps) {
-    let isChangeValue =
-      JSON.stringify({ value: this.state.value }) !==
-      JSON.stringify({ value: this.props.value });
-    let isChangeData =
-      JSON.stringify({ value: this.state.data }) !==
-      JSON.stringify({ value: this.props.data });
-    if (isChangeValue || isChangeData) {
-      const { value, keyExtractor, data } = this.props;
-      let _value = null;
-      if (value && data && length(data) > 0) {
-        if (keyExtractor) {
-          let index = findIndex(
-            item =>
-              JSON.stringify({ value: item }) === JSON.stringify({ value }),
-            data
-          );
-          _value = keyExtractor(value, index);
-        } else _value = value["id"];
-      }
-      this.setState({
-        value: _value,
-        data: this.props.data
-      });
-    }
-  }
+  // componentDidUpdate(preProps) {
+  //   let isChangeValue =
+  //     JSON.stringify({ value: this.state.value }) !==
+  //     JSON.stringify({ value: this.props.value });
+  //   let isChangeData =
+  //     JSON.stringify({ value: this.state.data }) !==
+  //     JSON.stringify({ value: this.props.data });
+  //   if (isChangeValue || isChangeData) {
+  //     const { value, keyExtractor, data } = this.props;
+  //     let _value = null;
+  //     if (value && data && length(data) > 0) {
+  //       if (keyExtractor) {
+  //         let index = findIndex(
+  //           item =>
+  //             JSON.stringify({ value: item }) === JSON.stringify({ value }),
+  //           data
+  //         );
+  //         _value = keyExtractor(value, index);
+  //       } else _value = value["id"];
+  //     }
+  //     this.setState({
+  //       value: _value,
+  //       data: this.props.data
+  //     });
+  //   }
+  // }
 
   _renderItem(value, i) {
     const { keyExtractor, labelExtractor } = this.props;
@@ -145,7 +145,7 @@ class SelectionInputContainer extends Component {
           selectedValue={this.state.value}
           onValueChange={this._onValueChange}
         >
-          {length(this.state.data) > 0 && this.state.data.map(this._renderItem)}
+          {length(this.props.data) > 0 && this.props.data.map(this._renderItem)}
         </Wheel>
         {this._renderFooter()}
       </View>
