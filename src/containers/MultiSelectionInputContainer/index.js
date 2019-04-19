@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   ViewPropTypes
 } from "react-native";
-import Modal from "react-native-modal";
 import { findIndex } from "ramda";
 
 import styles from "./styles/MultiSelectionInputDialog";
 import Cell from "./Cell";
 
-class MultiSelectionInputDialog extends Component {
+class MultiSelectionInputContainer extends Component {
   constructor(props) {
     super(props);
     this._renderItem = this._renderItem.bind(this);
@@ -22,18 +21,6 @@ class MultiSelectionInputDialog extends Component {
     this.state = {
       values: props.values ? props.values : []
     };
-  }
-
-  componentDidUpdate(preProps) {
-    if (
-      !preProps.isVisible &&
-      this.props.isVisible &&
-      JSON.stringify(this.state.values) !== JSON.stringify(this.props.values)
-    ) {
-      this.setState({
-        values: this.props.values
-      });
-    }
   }
 
   _onItemPress(item) {
@@ -138,29 +125,23 @@ class MultiSelectionInputDialog extends Component {
 
   render() {
     return (
-      <Modal
-        isVisible={this.props.isVisible}
-        onBackdropPress={this.props.onBackdropPress}
-        style={styles.container}
-      >
-        <View>
-          {this._renderHeader()}
-          <FlatList
-            data={this.props.data}
-            style={styles.flatlist}
-            extraData={this.state.values}
-            numColumns={this.props.numColumns}
-            keyExtractor={this.props.keyExtractor}
-            renderItem={this._renderItem}
-          />
-          {this._renderFooter()}
-        </View>
-      </Modal>
+      <View style={styles.container}>
+        {this._renderHeader()}
+        <FlatList
+          data={this.props.data}
+          style={styles.flatlist}
+          extraData={this.state.values}
+          numColumns={this.props.numColumns}
+          keyExtractor={this.props.keyExtractor}
+          renderItem={this._renderItem}
+        />
+        {this._renderFooter()}
+      </View>
     );
   }
 }
 
-MultiSelectionInputDialog.defaultProps = {
+MultiSelectionInputContainer.defaultProps = {
   data: [],
   numColumns: 3,
   values: [],
@@ -168,7 +149,7 @@ MultiSelectionInputDialog.defaultProps = {
   onPressOK: () => {}
 };
 
-MultiSelectionInputDialog.propTypes = {
+MultiSelectionInputContainer.propTypes = {
   data: PropTypes.array,
   keyExtractor: PropTypes.func,
   labelExtractor: PropTypes.func,
@@ -197,4 +178,4 @@ MultiSelectionInputDialog.propTypes = {
   buttonCloseText: PropTypes.string
 };
 
-export default MultiSelectionInputDialog;
+export default MultiSelectionInputContainer;

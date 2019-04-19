@@ -1,14 +1,14 @@
 // import TextInputDialog from "./TextInputDialog";
 // import NumbericInputDialog from "./NumbericInputDialog";
 import SelectionInputContainer from "./SelectionInputContainer";
-// import MultiSelectionInputDialog from "./MultiSelectionInputDialog";
+import MultiSelectionInputContainer from "./MultiSelectionInputContainer";
 // import DateInputDialog from "./DateInputDialog";
 
 export {
-  SelectionInputContainer
+  SelectionInputContainer,
   // TextInputDialog,
   // NumbericInputDialog,
   // SelectionInputDialog,
-  // MultiSelectionInputDialog,
+  MultiSelectionInputContainer
   // DateInputDialog
 };
