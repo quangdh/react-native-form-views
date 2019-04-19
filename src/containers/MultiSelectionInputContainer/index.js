@@ -119,8 +119,8 @@ class MultiSelectionInputContainer extends Component {
 
   _onPressOK() {
     const { onBackdropPress, onPressOK } = this.props;
-    onPressOK(this.state.values);
-    onBackdropPress();
+    if (onPressOK) onPressOK(this.state.values);
+    if (onBackdropPress) onBackdropPress();
   }
 
   render() {
