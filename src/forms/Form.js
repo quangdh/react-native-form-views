@@ -6,7 +6,8 @@ import styles from "./styles/FormStyles";
 
 class Form extends PureComponent {
   render() {
-    return <View style={styles.container}>{this.props.children}</View>;
+    const { style } = this.props;
+    return <View style={[styles.container, style]}>{this.props.children}</View>;
   }
 }
 
