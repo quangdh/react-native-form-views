@@ -1,6 +1,3 @@
-"use strict";
-import { PickerIOS, Platform } from "react-native";
+import { WheelPicker } from "react-native-wheel-picker-android";
 
-import WheelCurvedPicker from "./WheelCurvedPicker";
-
-export default (Platform.OS === "ios" ? PickerIOS : WheelCurvedPicker);
+export default WheelPicker;

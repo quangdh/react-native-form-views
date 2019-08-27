@@ -1,6 +1,5 @@
+import { TimePicker, DatePicker } from "react-native-wheel-picker-android";
 import KeyboardAvoidView from "./KeyboardAvoidView";
 import Wheel from "./Wheel";
-import DatePicker from "./DatePicker";
-import RNDateTimePicker from "./datetimepicker";
 
-export { KeyboardAvoidView, Wheel, DatePicker, RNDateTimePicker };
+export { KeyboardAvoidView, Wheel, DatePicker, TimePicker };

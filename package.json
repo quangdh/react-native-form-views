@@ -1,6 +1,6 @@
 {
   "name": "react-native-form-views",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,8 @@
   "license": "",
   "peerDependencies": {
     "react": ">=16.8",
-    "react-native": "^0.41.2"
+    "react-native": "^0.41.2",
+    "react-native-wheel-picker-android": "^2.0.5"
   },
   "dependencies": {
     "numeral": "^2.0.6",
